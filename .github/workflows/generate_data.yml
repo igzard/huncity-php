@@ -30,15 +30,22 @@ jobs:
           chmod +x ./bin/generator
           ./bin/generator
 
-      - name: Configure Git
+      - name: Check for Changes
+        id: changes_check
+        run: |
+          if [[ -z $(git status --porcelain) ]]; then
+            echo "No changes detected."
+            echo "changed=false" >> $GITHUB_ENV
+          else
+            echo "Changes detected."
+            echo "changed=true" >> $GITHUB_ENV
+          fi
+
+      - name: Commit and Push Changes
+        if: env.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Commit and Push Changes
-        run: |
           git add .
           git commit -m "Update generated files"
           git push origin master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
