@@ -1,4 +1,4 @@
-name: Run PHP Generator and Push to Master
+name: 🗃️ Generate indexes
 
 on:
   workflow_dispatch:
