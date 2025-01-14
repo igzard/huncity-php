@@ -1,12 +1,12 @@
 {
-    "name": "igzard/php-skeleton",
-    "description": "🎉 This skeleton PHP package created for your new package idea",
+    "name": "igzard/huncity-php",
+    "description": "Searchable hungarian city list PHP library with zip code",
     "type": "library",
-    "keywords": ["php", "skeleton", "package"],
+    "keywords": ["php", "hungary", "city", "zip", "list", "varos", "iranyitoszam", "magyar", "telepules"],
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Igzard\\PhpSkeleton\\": "src/"
+            "Igzard\\HuncityPhp\\": "src/"
         }
     },
     "authors": [
