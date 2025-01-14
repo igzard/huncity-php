@@ -1,0 +1,35 @@
+name: Run Generator and Push to Master
+
+on:
+  workflow_dispatch: # Manuális futtatás
+  push:
+    branches:
+      - master # Ha a master branchre push történik
+
+jobs:
+  run-generator:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Generator Script
+        run: |
+          chmod +x /bin/generator
+          /bin/generator
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit and Push Changes
+        run: |
+          git add .
+          git commit -m "Update generated files"
+          git push origin master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
