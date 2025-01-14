@@ -13,6 +13,6 @@ class Zipcode extends Searchable
         $zipcodes = require __DIR__.'/../../../data/generated/_zipcodes.php';
         $needle = strtolower($needle);
 
-        return $zipcodes[$needle] ?? [];
+        return $zipcodes[$needle] ? \array_slice($zipcodes[$needle], 0, $this->limit) : [];
     }
 }

@@ -10,8 +10,10 @@ abstract class Searchable
 
     abstract public function search(string $needle): array;
 
-    public function setLimit(int $limit): void
+    public function setLimit(int $limit): self
     {
         $this->limit = $limit;
+
+        return $this;
     }
 }

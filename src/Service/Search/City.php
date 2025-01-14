@@ -13,6 +13,6 @@ class City extends Searchable
         $cities = require __DIR__.'/../../../data/generated/_cities.php';
         $needle = strtolower($needle);
 
-        return $cities[$needle] ?? [];
+        return $cities[$needle] ? \array_slice($cities[$needle], 0, $this->limit) : [];
     }
 }

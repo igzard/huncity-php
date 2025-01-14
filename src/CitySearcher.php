@@ -12,7 +12,7 @@ final class CitySearcher
 
     public function __construct()
     {
-        $this->searchable = new Service\Search\City();
+        $this->searchable = (new Service\Search\City());
     }
 
     public function findBy(Searchable $searchable): self
