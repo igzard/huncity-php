@@ -1,13 +1,13 @@
-name: Run Generator and Push to Master
+name: Run PHP Generator and Push to Master
 
 on:
-  workflow_dispatch: # Manuális futtatás
+  workflow_dispatch:
   push:
     branches:
-      - master # Ha a master branchre push történik
+      - master
 
 jobs:
-  run-generator:
+  run-php-generator:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,10 +16,19 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+          tools: composer
+
+      - name: Install Composer Dependencies
+        run: composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
+
       - name: Run Generator Script
         run: |
-          chmod +x /bin/generator
-          /bin/generator
+          chmod +x ./bin/generator
+          ./bin/generator
 
       - name: Configure Git
         run: |
