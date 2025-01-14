@@ -8,11 +8,14 @@ use Igzard\HuncityPhp\Contract\Searchable;
 
 class City extends Searchable
 {
+    private const string INDEX_FILE = __DIR__.'/../../../data/generated/_cities.php';
+
     public function search(string $needle): array
     {
-        $cities = require __DIR__.'/../../../data/generated/_cities.php';
+        $cities = require self::INDEX_FILE;
+
         $needle = strtolower($needle);
 
-        return $cities[$needle] ? \array_slice($cities[$needle], 0, $this->limit) : [];
+        return isset($cities[$needle]) ? \array_slice($cities[$needle], 0, $this->limit) : [];
     }
 }
