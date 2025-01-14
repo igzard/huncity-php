@@ -18,9 +18,11 @@ class CitySearcherTest extends TestCase
     /**
      * @dataProvider cityDataProvider
      */
-    public function testCitySearch(string $needle, array $expected): void
+    public function testCitySearch(string $needle, int $limit, array $expected): void
     {
-        $this->assertEquals($expected, $this->citySearcher->find($needle));
+        $citySearcher = $this->citySearcher->findBy((new Igzard\HuncityPhp\Service\Search\City())->setLimit($limit));
+
+        $this->assertEquals($expected, $citySearcher->find($needle));
     }
 
     public function cityDataProvider(): array
@@ -28,10 +30,25 @@ class CitySearcherTest extends TestCase
         return [
             'case 1#' => [
                 'needle' => 'Tura',
+                'limit' => 10,
                 'expected' => [
                     [
                         'city' => 'Tura',
                         'zipcode' => '2194',
+                    ],
+                ],
+            ],
+            'case 2#' => [
+                'needle' => 'Kör',
+                'limit' => 2,
+                'expected' => [
+                    [
+                        'city' => 'Környe',
+                        'zipcode' => '2851',
+                    ],
+                    [
+                        'city' => 'Köröm',
+                        'zipcode' => '3577',
                     ],
                 ],
             ],
@@ -57,6 +74,24 @@ class CitySearcherTest extends TestCase
                     [
                         'city' => 'Tura',
                         'zipcode' => '2194',
+                    ],
+                ],
+            ],
+            'case 2#' => [
+                'needle' => '2851',
+                'expected' => [
+                    [
+                        'city' => 'Környe',
+                        'zipcode' => '2851',
+                    ],
+                ],
+            ],
+            'case 3#' => [
+                'needle' => '3577',
+                'expected' => [
+                    [
+                        'city' => 'Köröm',
+                        'zipcode' => '3577',
                     ],
                 ],
             ],
